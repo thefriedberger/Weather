@@ -3,8 +3,11 @@
 <head>
 	<title>Weather</title>
 <style>
+body {
+	background-color:gray;
+}
 .wrapper {
-	height:250px;
+	height:230px;
 	width:300px;
 	position:absolute;
 	top:50%;
@@ -32,15 +35,15 @@
 	animation:none;
 }
 @keyframes cardFlip {
-	0% {  transform:rotateX(0); width:300px; left:0%;}
-	100% { transform:rotateX(180deg); width:600px; left:-50%; box-shadow:5px -5px 20px black;}
+	0% {  transform:rotateX(0); width:300px; height:230px; left:0%;}
+	100% { transform:rotateX(180deg); width:600px; height:250px; left:-50%; box-shadow:5px -5px 20px black;}
 }
 .cardFlip {
 	animation:cardFlip 1.5s forwards;
 }
 @keyframes reverseFlip {
-	0% { transform:rotateX(180deg); width:600px; left:-50%; box-shadow:5px -5px 20px black;}
-	100% {  transform:rotateX(-180); width:300px; left:0%;}
+	0% { transform:rotateX(180deg); width:600px; height:250px; left:-50%; box-shadow:5px -5px 20px black;}
+	100% {  transform:rotateX(-180); width:300px; height:230px; left:0%;}
 }
 .reverseFlip {
 	animation:reverseFlip 1.5s forwards;
@@ -81,6 +84,7 @@
 	background-color:#566689;
 	border-radius:5px 5px 0 0;
 	z-index:10;
+	height:22%;
 }
 .dateBar {
 	top:20%;
@@ -88,7 +92,7 @@
 	z-index:9;
 }
 .tempBar {
-	top:40%;
+	top:42%;
 	//background-color:#5C65EE;
 	z-index:8;
 }
@@ -99,8 +103,8 @@
 	z-index:7;
 	border-radius:0 0 5px 5px;
 }
-/* , .dateBar:hover, .tempBar:hover, .windBar:hover */
-.banner:hover{
+//, .dateBar:hover, .tempBar:hover, .windBar:hover
+.banner:hover {
 	box-shadow:0 0 10px black;
 }
 #date {
@@ -110,10 +114,9 @@
 	font-size:20pt;
 }
 #temp {
-	left:50%;
+	left:51%;
 	position:absolute;
 	transform:translate(-50%,0);
-	padding:5px 5px 5px 10px;
 }
 #wind {
 	top:15%;
@@ -133,9 +136,6 @@
 #chill {
 	position:relative;
 }
-#chill::before {
-	content:"Feels like ";
-}
 .slot {
 	height:95%;
 	width:19%;
@@ -148,19 +148,19 @@
 	border-radius:5px;
 }
 #day1 { 
-	left:0.5%;
+	left:.75%;
 }
 #day2 {
-	left:20.5%;
+	left:20.75%;
 }
 #day3 {
-	left:40.5%;
+	left:40.75%;
 }
 #day4 {
-	left:60.5%;
+	left:60.75%;
 }
 #day5 {
-	left:80.5%;
+	left:80.75%;
 }
 .high {
 	top:5%;
@@ -180,6 +180,7 @@
 }
 .day {
 	font-size:30pt;
+	position:relative;
 }
 .weather {
 	top:20%;
@@ -197,6 +198,17 @@
 	background-color:#efd45b;
 	color:black;
 }
+.sunnyDay {
+	height:50px;
+	width:50px;
+	border-radius:50%;
+	top:10%;
+	left:20%;
+	background-color:#efd45b;
+	position:absolute;
+	z-index:0;
+	animation:sunny 2s ease-in-out infinite;
+}
 .rainy {
 	background-color:#688ecc;
 }
@@ -205,6 +217,11 @@
 }
 
 /************ PUT ANIMATIONS BELOW HERE ***************/
+
+@keyframes sunny {
+	0%, 100% { box-shadow:0 0 20px #f4eb42; }
+	50% { box-shadow:0 0 50px #f4eb42; }
+}
 </style>
 </head>
 <body>
@@ -265,30 +282,35 @@ xhttp.send();
 
 function onLoad(e) {
 	data = JSON.parse(xhttp.responseText);
-	console.log(data);
+	console.log(data); //use as a reference to look into api
+	
 	var channel = data.query.results.channel;
 	
+	//finds the current temp and displays it
 	var currentTemp = channel.item.condition.temp;
 	var temp = document.getElementById("temp");
 	temp.innerHTML = currentTemp + '°';
 	
+	//finds current location and displays it
 	var currentLocation = channel.location.city + ', ' + channel.location.region;
 	var location = document.getElementById("location");
 	location.innerHTML = currentLocation;
 	
+	//finds current wind speed and displays it
 	var currentWindSpeed = channel.wind.speed;
 	var windSpeed = document.getElementById("speed");
 	windSpeed.innerHTML = currentWindSpeed;
 	
+	//finds wind chill and displays
 	var currentWindChill = channel.wind.chill;
 	var windChill = document.getElementById("chill");
-	windChill.innerHTML = currentWindChill + '°';	
+	windChill.innerHTML = 'Feels like ' + currentWindChill + '°';	
 	
-	var forecast = channel.item.forecast;
+	var forecast = channel.item.forecast; 
 	
 	//determines the day and makes it a full string
-	//I should probably throw this in its own method, make it more modular
-	var currentDay = forecast[0].day;
+	//I should probably throw this in its own method
+	var currentDay = forecast[0].day;//only gets the current day, used to print date
 	switch(currentDay) {
 		case "Mon":
 			currentDay="Monday";
@@ -312,7 +334,7 @@ function onLoad(e) {
 			currentDay="Sunday";
 			break;
 		}	
-	var actualDate = channel.item.forecast[0].date;
+	var actualDate = channel.item.forecast[0].date;//finds the more numeric date, plus year
 	var date = document.getElementById("date");
 	date.innerHTML = currentDay + ', ' + actualDate;
 	
@@ -324,7 +346,11 @@ function onLoad(e) {
 		var day = document.getElementsByClassName("day");
 		day[i].innerHTML += forecastDay;
 		
-		//determine which images to display for projected weather
+		/*
+		Determine which images to display for projected weather
+		determine background color for each card
+		use this to apply animation, but might externalize the drawing as it's getting crowded
+		*/
 		var img = document.getElementsByClassName("img");
 		var currentWeather = forecast[i].text;
 		var slot = document.getElementsByClassName("slot");
