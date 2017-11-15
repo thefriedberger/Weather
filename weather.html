@@ -3,9 +3,8 @@
 <head>
 	<title>Weather</title>
 <style>
-body {
-	background-color:gray;
-}
+body {background-color:gray;}
+
 .wrapper {
 	height:230px;
 	width:300px;
@@ -31,23 +30,12 @@ body {
 	transform-style:preserve-3d;
 	transform:rotateX(0deg);
 }
-.noAnimation {
-	animation:none;
-}
-@keyframes cardFlip {
-	0% {  transform:rotateX(0); width:300px; height:230px; left:0%;}
-	100% { transform:rotateX(180deg); width:600px; height:250px; left:-50%; box-shadow:5px -5px 20px black;}
-}
-.cardFlip {
-	animation:cardFlip 1.5s forwards;
-}
-@keyframes reverseFlip {
-	0% { transform:rotateX(180deg); width:600px; height:250px; left:-50%; box-shadow:5px -5px 20px black;}
-	100% {  transform:rotateX(-180); width:300px; height:230px; left:0%;}
-}
-.reverseFlip {
-	animation:reverseFlip 1.5s forwards;
-}
+.noAnimation {animation:none;}
+
+.cardFlip {animation:cardFlip 1.5s forwards;}
+
+.reverseFlip {animation:reverseFlip 1.5s forwards;}
+
 .front {
 	position:absolute;
 	height:100%;
@@ -103,7 +91,6 @@ body {
 	z-index:7;
 	border-radius:0 0 5px 5px;
 }
-//, .dateBar:hover, .tempBar:hover, .windBar:hover
 .banner:hover {
 	box-shadow:0 0 10px black;
 }
@@ -126,16 +113,14 @@ body {
 	font-size:20pt;
 	text-align:center;
 }
-#speed { 
-	position:relative;
-}
+#speed {position:relative;}
+
 #speed::after {
 	content:"mph";
 	font-size:12pt;
 }
-#chill {
-	position:relative;
-}
+#chill {position:relative;}
+
 .slot {
 	height:95%;
 	width:19%;
@@ -146,28 +131,20 @@ body {
 	font-size:20pt;
 	background-color:#566689;
 	border-radius:5px;
+	overflow:hidden;
 }
-#day1 { 
-	left:.75%;
-}
-#day2 {
-	left:20.75%;
-}
-#day3 {
-	left:40.75%;
-}
-#day4 {
-	left:60.75%;
-}
-#day5 {
-	left:80.75%;
-}
+#day1 {left:.75%;}
+#day2 {left:20.75%;}
+#day3 {left:40.75%;}
+#day4 {left:60.75%;}
+#day5 {left:80.75%;}
+
 .high {
-	top:5%;
+	top:45%;
 	position:relative;
 }
 .low {
-	top:10%;
+	top:50%;
 	position:relative;
 }
 .high::before {
@@ -179,48 +156,124 @@ body {
 	font-size:16pt;
 }
 .day {
-	font-size:30pt;
+	font-size:25pt;
 	position:relative;
+	height:17%
+	width:100%;
+	background-color:#182230;
 }
-.weather {
-	top:20%;
-	position:relative;
-}
-.img {
-	height:50%;
-	width:50%;
-}
-.partly {
-	background-color:#d0d5dd;
-	color:black;
-}
-.sunny {
-	background-color:#efd45b;
-	color:black;
-}
-.sunnyDay {
+.sunny .layer1 {
 	height:50px;
 	width:50px;
 	border-radius:50%;
-	top:10%;
+	top:25%;
 	left:20%;
 	background-color:#efd45b;
 	position:absolute;
-	z-index:0;
 	animation:sunny 2s ease-in-out infinite;
 }
-.rainy {
-	background-color:#688ecc;
+.cloudy .layer4 {
+	height:100%;
+	width:100%;
+	top:42%;
+	background-image:url(images/cloud.png);
+	background-size:60%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:cloudMove 8.5s infinite;
 }
-.cloudy {
-	background-color:#8a919b;
+.cloudy .layer3 {
+	height:100%;
+	width:100%;
+	top:33%;
+	background-image:url(images/cloud.png);
+	background-size:48%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:cloudMove 10.7s ease-in-out infinite;
+}
+.cloudy .layer2 {
+	height:100%;
+	width:100%;
+	top:20%;
+	background-image:url(images/cloud.png);
+	background-size:40%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:cloudMove 10s infinite;
+}
+.rainy .layer1 {
+	height:100%;
+	width:100%;
+	left:10%;
+	background-image:url(images/rain_drop.png);
+	background-size:10%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall 4s infinite;
+}
+.rainy .layer2 {
+	height:100%;
+	width:100%;
+	left:40%;
+	background-image:url(images/rain_drop.png);
+	background-size:15%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall 2.9s infinite;
+}
+.rainy .layer3 {
+	height:100%;
+	width:100%;
+	left:55%;
+	background-image:url(images/rain_drop.png);
+	background-size:20%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall 5s infinite;
+}
+.rainy .layer4 {
+	height:100%;
+	width:100%;
+	left:20%
+	background-image:url(images/rain_drop.png);
+	background-size:25%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall 3s infinite;
+}
+.rainy .layer5 {
+	height:100%;
+	width:100%;
+	top:17%;
+	background-image:url(images/storm_cloud.png);
+	background-size:110%;
+	background-repeat:no-repeat;
+	background-position:50% -40%;
+	position:absolute;
 }
 
 /************ PUT ANIMATIONS BELOW HERE ***************/
 
+@keyframes cardFlip {
+	0% {  transform:rotateX(0); width:300px; height:230px; left:0%;}
+	100% { transform:rotateX(180deg); width:600px; height:250px; left:-50%; box-shadow:5px -5px 20px black;}
+}
+@keyframes reverseFlip {
+	0% { transform:rotateX(180deg); width:600px; height:250px; left:-50%; box-shadow:5px -5px 20px black;}
+	100% {  transform:rotateX(-180); width:300px; height:230px; left:0%;}
+}
 @keyframes sunny {
 	0%, 100% { box-shadow:0 0 20px #f4eb42; }
 	50% { box-shadow:0 0 50px #f4eb42; }
+}
+@keyframes rainfall {
+	0% { top:-10%;}
+	100% { top: 150%;}
+}
+@keyframes cloudMove {
+	0% {left:-70%; }
+	100% { left:105%; }
 }
 </style>
 </head>
@@ -238,34 +291,64 @@ body {
 		</div>
 		<div class="back">
 			<div class="slot" id="day1">
+				<div class="animation">
+					<div class="layer1"></div>
+					<div class="layer2"></div>
+					<div class="layer3"></div>
+					<div class="layer4"></div>
+					<div class="layer5"></div>
+				</div>
 				<div class="day"></div>
 				<div class="high"></div>
 				<div class="low"></div>
-				<div class="weather"><img class="img"></img></div>
 			</div>
 			<div class="slot" id="day2">
+				<div class="animation">
+					<div class="layer1"></div>
+					<div class="layer2"></div>
+					<div class="layer3"></div>
+					<div class="layer4"></div>
+					<div class="layer5"></div>
+				</div>
 				<div class="day"></div>
 				<div class="high"></div>
 				<div class="low"></div>
-				<div class="weather"><img class="img"></img></div>
 			</div>
 			<div class="slot" id="day3">
+				<div class="animation">
+					<div class="layer1"></div>
+					<div class="layer2"></div>
+					<div class="layer3"></div>
+					<div class="layer4"></div>
+					<div class="layer5"></div>
+				</div>
 				<div class="day"></div>
 				<div class="high"></div>
 				<div class="low"></div>
-				<div class="weather"><img class="img"></img></div>
 			</div>
 			<div class="slot" id="day4">
+				<div class="animation">
+					<div class="layer1"></div>
+					<div class="layer2"></div>
+					<div class="layer3"></div>
+					<div class="layer4"></div>
+					<div class="layer5"></div>
+				</div>
 				<div class="day"></div>
 				<div class="high"></div>
 				<div class="low"></div>
-				<div class="weather"><img class="img"></img></div>
 			</div>
 			<div class="slot" id="day5">
+				<div class="animation">
+					<div class="layer1"></div>
+					<div class="layer2"></div>
+					<div class="layer3"></div>
+					<div class="layer4"></div>
+					<div class="layer5"></div>
+				</div>
 				<div class="day"></div>
 				<div class="high"></div>
 				<div class="low"></div>
-				<div class="weather"><img class="img"></img></div>
 			</div>
 		</div>
 	</div>
@@ -351,24 +434,19 @@ function onLoad(e) {
 		determine background color for each card
 		use this to apply animation, but might externalize the drawing as it's getting crowded
 		*/
-		var img = document.getElementsByClassName("img");
+		//var img = document.getElementsByClassName("img");
 		var currentWeather = forecast[i].text;
-		var slot = document.getElementsByClassName("slot");
+		var layer = document.getElementsByClassName("animation");
 		if (currentWeather == "Partly Cloudy" || currentWeather == "Partly Sunny") {
-			img[i].src = "images/partly_cloudy_black.png";
-			slot[i].className = "slot partly";
+			layer[i].className = "animation sunny cloudy";
 		}else if (currentWeather =="Mostly Cloudy") {
-			img[i].src = "images/cloudy.png";
-			slot[i].className = "slot cloudy";
+			layer[i].className = "animation cloudy";
 		}else if (currentWeather == "Rain") {
-			img[i].src = "images/rainy.png";
-			slot[i].className = "slot rainy";
+			layer[i].className = "animation rainy";
 		}else if (currentWeather == "Mostly Sunny") {
-			img[i].src = "images/sunny_black.png";
-			slot[i].className = "slot sunny";
-		}else if (currentWeather == "Scattered Showers") {
-			img[i].src = "images/scattered.png";
-			slot[i].className = "slot rainy";
+			layer[i].className = "animation sunny";
+		}else if (currentWeather == "Scattered Showers" || currentWeather == "Showers") {
+			layer[i].className = "animation rainy";
 		}
 		
 		//get the high temperatures for each day, put them in
