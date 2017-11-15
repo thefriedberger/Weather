@@ -123,7 +123,7 @@ body {background-color:gray;}
 
 .slot {
 	height:95%;
-	width:19%;
+	width:18.5%;
 	position:absolute;
 	top:2.5%;
 	box-shadow:inset 0 0 10px black;
@@ -161,6 +161,7 @@ body {background-color:gray;}
 	height:17%
 	width:100%;
 	background-color:#182230;
+	opacity:.7;
 }
 .sunny .layer1 {
 	height:50px;
@@ -202,7 +203,7 @@ body {background-color:gray;}
 	position:absolute;
 	animation:cloudMove 10s infinite;
 }
-.rainy .layer1 {
+.rainy .layer1, .lightRain .layer1 {
 	height:100%;
 	width:100%;
 	left:10%;
@@ -212,37 +213,77 @@ body {background-color:gray;}
 	position:absolute;
 	animation:rainfall 4s infinite;
 }
-.rainy .layer2 {
+.rainy .layer2, .lightRain .layer2 {
 	height:100%;
 	width:100%;
-	left:40%;
+	left:45%;
 	background-image:url(images/rain_drop.png);
-	background-size:15%;
+	background-size:13%;
 	background-repeat:no-repeat;
 	position:absolute;
 	animation:rainfall 2.9s infinite;
 }
-.rainy .layer3 {
+.rainy .layer3, .lightRain .layer3 {
 	height:100%;
 	width:100%;
-	left:55%;
+	left:75%;
 	background-image:url(images/rain_drop.png);
-	background-size:20%;
+	background-size:12%;
 	background-repeat:no-repeat;
 	position:absolute;
 	animation:rainfall 5s infinite;
 }
-.rainy .layer4 {
+.rainy .layer4, .lightRain .layer4 {
 	height:100%;
 	width:100%;
-	left:20%
+	left:35%;
 	background-image:url(images/rain_drop.png);
-	background-size:25%;
+	background-size:9%;
 	background-repeat:no-repeat;
 	position:absolute;
-	animation:rainfall 3s infinite;
+	animation:rainfall 5.6s infinite;
 }
 .rainy .layer5 {
+	height:100%;
+	width:100%;
+	left:70%;
+	background-image:url(images/rain_drop.png);
+	background-size:11%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall 3.5s infinite;
+}
+.rainy .layer6 {
+	height:100%;
+	width:100%;
+	left:30%;
+	background-image:url(images/rain_drop.png);
+	background-size:12%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall 5.4s infinite;
+}
+.rainy .layer7 {
+	height:100%;
+	width:100%;
+	left:67%;
+	background-image:url(images/rain_drop.png);
+	background-size:9%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall 1.9s infinite;
+}
+.rainy .layer8 {
+	height:100%;
+	width:100%;
+	left:40%;
+	background-image:url(images/rain_drop.png);
+	background-size:5%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall 1.4s infinite;
+}
+.rainy .layer9, .lightRain .layer9 {
 	height:100%;
 	width:100%;
 	top:17%;
@@ -268,8 +309,8 @@ body {background-color:gray;}
 	50% { box-shadow:0 0 50px #f4eb42; }
 }
 @keyframes rainfall {
-	0% { top:-10%;}
-	100% { top: 150%;}
+	0% { top:17%;}
+	100% { top: 130%;}
 }
 @keyframes cloudMove {
 	0% {left:-70%; }
@@ -297,6 +338,10 @@ body {background-color:gray;}
 					<div class="layer3"></div>
 					<div class="layer4"></div>
 					<div class="layer5"></div>
+					<div class="layer6"></div>
+					<div class="layer7"></div>
+					<div class="layer8"></div>
+					<div class="layer9"></div>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -309,6 +354,10 @@ body {background-color:gray;}
 					<div class="layer3"></div>
 					<div class="layer4"></div>
 					<div class="layer5"></div>
+					<div class="layer6"></div>
+					<div class="layer7"></div>
+					<div class="layer8"></div>
+					<div class="layer9"></div>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -321,6 +370,10 @@ body {background-color:gray;}
 					<div class="layer3"></div>
 					<div class="layer4"></div>
 					<div class="layer5"></div>
+					<div class="layer6"></div>
+					<div class="layer7"></div>
+					<div class="layer8"></div>
+					<div class="layer9"></div>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -333,6 +386,10 @@ body {background-color:gray;}
 					<div class="layer3"></div>
 					<div class="layer4"></div>
 					<div class="layer5"></div>
+					<div class="layer6"></div>
+					<div class="layer7"></div>
+					<div class="layer8"></div>
+					<div class="layer9"></div>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -345,6 +402,10 @@ body {background-color:gray;}
 					<div class="layer3"></div>
 					<div class="layer4"></div>
 					<div class="layer5"></div>
+					<div class="layer6"></div>
+					<div class="layer7"></div>
+					<div class="layer8"></div>
+					<div class="layer9"></div>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -372,7 +433,7 @@ function onLoad(e) {
 	//finds the current temp and displays it
 	var currentTemp = channel.item.condition.temp;
 	var temp = document.getElementById("temp");
-	temp.innerHTML = currentTemp + '°';
+	temp.innerHTML = currentTemp + '&#176';
 	
 	//finds current location and displays it
 	var currentLocation = channel.location.city + ', ' + channel.location.region;
@@ -387,7 +448,7 @@ function onLoad(e) {
 	//finds wind chill and displays
 	var currentWindChill = channel.wind.chill;
 	var windChill = document.getElementById("chill");
-	windChill.innerHTML = 'Feels like ' + currentWindChill + '°';	
+	windChill.innerHTML = 'Feels like ' + currentWindChill + '&#176';	
 	
 	var forecast = channel.item.forecast; 
 	
@@ -446,18 +507,18 @@ function onLoad(e) {
 		}else if (currentWeather == "Mostly Sunny") {
 			layer[i].className = "animation sunny";
 		}else if (currentWeather == "Scattered Showers" || currentWeather == "Showers") {
-			layer[i].className = "animation rainy";
+			layer[i].className = "animation lightRain";
 		}
 		
 		//get the high temperatures for each day, put them in
 		var highTemp = forecast[i].high;
 		var high = document.getElementsByClassName("high");
-		high[i].innerHTML += highTemp + '°';
+		high[i].innerHTML += highTemp + '&#176';
 		
 		//get the lows for each day, put them in
 		var lowTemp = forecast[i].low;
 		var low = document.getElementsByClassName("low");
-		low[i].innerHTML += lowTemp + '°';
+		low[i].innerHTML += lowTemp + '&#176';
 	}
 }
 //eventListener to flip the card
