@@ -161,6 +161,7 @@ body {background-color:gray;}
 	height:17%
 	width:100%;
 	background-color:#182230;
+	opacity:.7;
 }
 .sunny .layer1 {
 	height:50px;
@@ -245,6 +246,46 @@ body {background-color:gray;}
 .rainy .layer5 {
 	height:100%;
 	width:100%;
+	left:50%
+	background-image:url(images/rain_drop.png);
+	background-size:25%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall 3s infinite;
+}
+.rainy .layer6 {
+	height:100%;
+	width:100%;
+	left:70%
+	background-image:url(images/rain_drop.png);
+	background-size:55%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall 8s infinite;
+}
+.rainy .layer7 {
+	height:100%;
+	width:100%;
+	left:80%
+	background-image:url(images/rain_drop.png);
+	background-size:25%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall .5s infinite;
+}
+.rainy .layer8 {
+	height:100%;
+	width:100%;
+	left:57%
+	background-image:url(images/rain_drop.png);
+	background-size:25%;
+	background-repeat:no-repeat;
+	position:absolute;
+	animation:rainfall 1s infinite;
+}
+.rainy .layer9 {
+	height:100%;
+	width:100%;
 	top:17%;
 	background-image:url(images/storm_cloud.png);
 	background-size:110%;
@@ -268,8 +309,8 @@ body {background-color:gray;}
 	50% { box-shadow:0 0 50px #f4eb42; }
 }
 @keyframes rainfall {
-	0% { top:-10%;}
-	100% { top: 150%;}
+	0% { top:17%;}
+	100% { top: 130%;}
 }
 @keyframes cloudMove {
 	0% {left:-70%; }
@@ -297,6 +338,10 @@ body {background-color:gray;}
 					<div class="layer3"></div>
 					<div class="layer4"></div>
 					<div class="layer5"></div>
+					<div class="layer6"></div>
+					<div class="layer7"></div>
+					<div class="layer8"></div>
+					<div class="layer9"></div>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -309,6 +354,10 @@ body {background-color:gray;}
 					<div class="layer3"></div>
 					<div class="layer4"></div>
 					<div class="layer5"></div>
+					<div class="layer6"></div>
+					<div class="layer7"></div>
+					<div class="layer8"></div>
+					<div class="layer9"></div>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -321,6 +370,10 @@ body {background-color:gray;}
 					<div class="layer3"></div>
 					<div class="layer4"></div>
 					<div class="layer5"></div>
+					<div class="layer6"></div>
+					<div class="layer7"></div>
+					<div class="layer8"></div>
+					<div class="layer9"></div>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -333,6 +386,10 @@ body {background-color:gray;}
 					<div class="layer3"></div>
 					<div class="layer4"></div>
 					<div class="layer5"></div>
+					<div class="layer6"></div>
+					<div class="layer7"></div>
+					<div class="layer8"></div>
+					<div class="layer9"></div>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -345,6 +402,10 @@ body {background-color:gray;}
 					<div class="layer3"></div>
 					<div class="layer4"></div>
 					<div class="layer5"></div>
+					<div class="layer6"></div>
+					<div class="layer7"></div>
+					<div class="layer8"></div>
+					<div class="layer9"></div>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
