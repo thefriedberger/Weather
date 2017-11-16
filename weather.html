@@ -163,7 +163,7 @@ body {background-color:gray;}
 	background-color:#182230;
 	opacity:.7;
 }
-.sunny .layer1 {
+.sunny .layer1, .cloudy .layer1 {
 	height:50px;
 	width:50px;
 	border-radius:50%;
@@ -208,83 +208,80 @@ body {background-color:gray;}
 	width:100%;
 	left:10%;
 	background-image:url(images/rain_drop.png);
-	background-size:10%;
+	background-size:7%;
 	background-repeat:no-repeat;
 	position:absolute;
-	animation:rainfall 4s infinite;
+	animation:rainfall 2s ease-in-out infinite;
 }
 .rainy .layer2, .lightRain .layer2 {
 	height:100%;
 	width:100%;
-	left:45%;
+	left:30%;
 	background-image:url(images/rain_drop.png);
-	background-size:13%;
+	background-size:6%;
 	background-repeat:no-repeat;
 	position:absolute;
-	animation:rainfall 2.9s infinite;
+	animation:rainfall 2.2s ease-in-out infinite;
 }
 .rainy .layer3, .lightRain .layer3 {
 	height:100%;
 	width:100%;
-	left:75%;
+	left:45%;
 	background-image:url(images/rain_drop.png);
-	background-size:12%;
+	background-size:8%;
 	background-repeat:no-repeat;
 	position:absolute;
-	animation:rainfall 5s infinite;
+	animation:rainfall 1.7s ease-in-out infinite;
 }
 .rainy .layer4, .lightRain .layer4 {
 	height:100%;
 	width:100%;
-	left:35%;
+	left:79%;
 	background-image:url(images/rain_drop.png);
-	background-size:9%;
+	background-size:5%;
 	background-repeat:no-repeat;
 	position:absolute;
-	animation:rainfall 5.6s infinite;
+	animation:rainfall 2.6s ease-in-out infinite;
 }
 .rainy .layer5 {
 	height:100%;
 	width:100%;
-	left:70%;
+	left:18%;
 	background-image:url(images/rain_drop.png);
 	background-size:11%;
 	background-repeat:no-repeat;
 	position:absolute;
-	animation:rainfall 3.5s infinite;
+	animation:rainfall 3.1s ease-in-out infinite;
 }
 .rainy .layer6 {
 	height:100%;
 	width:100%;
-	left:30%;
+	left:37%;
 	background-image:url(images/rain_drop.png);
-	background-size:12%;
-	background-size:16%;
+	background-size:10%;
 	background-repeat:no-repeat;
 	position:absolute;
-	animation:rainfall 5.4s infinite;
+	animation:rainfall 3.5s ease-in-out infinite;
 }
 .rainy .layer7 {
 	height:100%;
 	width:100%;
-	left:67%;
+	left:57%;
 	background-image:url(images/rain_drop.png);
-	background-size:9%;
-	background-size:17%;
+	background-size:11%;
 	background-repeat:no-repeat;
 	position:absolute;
-	animation:rainfall 1.9s infinite;
+	animation:rainfall 3.9s ease-in-out infinite;
 }
 .rainy .layer8 {
 	height:100%;
 	width:100%;
-	left:40%;
+	left:76%;
 	background-image:url(images/rain_drop.png);
-	background-size:5%;
-	background-size:13%;
+	background-size:10%;
 	background-repeat:no-repeat;
 	position:absolute;
-	animation:rainfall 1.4s infinite;
+	animation:rainfall 3.7s ease-in-out infinite;
 }
 .rainy .layer9, .lightRain .layer9 {
 	height:100%;
@@ -296,7 +293,6 @@ body {background-color:gray;}
 	background-position:50% -40%;
 	position:absolute;
 }
-
 /************ PUT ANIMATIONS BELOW HERE ***************/
 
 @keyframes cardFlip {
@@ -501,8 +497,10 @@ function onLoad(e) {
 		//var img = document.getElementsByClassName("img");
 		var currentWeather = forecast[i].text;
 		var layer = document.getElementsByClassName("animation");
-		if (currentWeather == "Partly Cloudy" || currentWeather == "Partly Sunny") {
-			layer[i].className = "animation sunny cloudy";
+		if (currentWeather == "Partly Cloudy" || currentWeather == "Cloudy") {
+			layer[i].className = "animation cloudy";
+		} else if (currentWeather == "Partly Sunny" || currentWeather == "Sunny") {
+			layer[i].className = "animation sunny";
 		}else if (currentWeather =="Mostly Cloudy") {
 			layer[i].className = "animation cloudy";
 		}else if (currentWeather == "Rain") {
