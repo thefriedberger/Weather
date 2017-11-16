@@ -163,7 +163,10 @@ body {background-color:gray;}
 	background-color:#182230;
 	opacity:.7;
 }
-.sunny .layer1, .cloudy .layer1 {
+
+/***** Set animation layers for Sunny, Cloudy, and partly sunny/cloudy *******/
+
+.sunny .layer1, .cloudy .layer1, .partly .layer1 {
 	height:50px;
 	width:50px;
 	border-radius:50%;
@@ -173,17 +176,17 @@ body {background-color:gray;}
 	position:absolute;
 	animation:sunny 2s ease-in-out infinite;
 }
-.cloudy .layer4 {
+.cloudy .layer2, .partly .layer2 {
 	height:100%;
 	width:100%;
-	top:42%;
+	top:20%;
 	background-image:url(images/cloud.png);
-	background-size:60%;
+	background-size:40%;
 	background-repeat:no-repeat;
 	position:absolute;
-	animation:cloudMove 8.5s infinite;
+	animation:cloudMove 10s infinite;
 }
-.cloudy .layer3 {
+.cloudy .layer3, .partly .layer3 {
 	height:100%;
 	width:100%;
 	top:33%;
@@ -193,15 +196,15 @@ body {background-color:gray;}
 	position:absolute;
 	animation:cloudMove 10.7s ease-in-out infinite;
 }
-.cloudy .layer2 {
+.cloudy .layer4, .partly .layer4 {
 	height:100%;
 	width:100%;
-	top:20%;
+	top:42%;
 	background-image:url(images/cloud.png);
-	background-size:40%;
+	background-size:60%;
 	background-repeat:no-repeat;
 	position:absolute;
-	animation:cloudMove 10s infinite;
+	animation:cloudMove 8.5s infinite;
 }
 .rainy .layer1, .lightRain .layer1 {
 	height:100%;
@@ -213,6 +216,9 @@ body {background-color:gray;}
 	position:absolute;
 	animation:rainfall 2s ease-in-out infinite;
 }
+
+/******* Sets animation layers for rain ********/
+
 .rainy .layer2, .lightRain .layer2 {
 	height:100%;
 	width:100%;
@@ -292,6 +298,19 @@ body {background-color:gray;}
 	background-repeat:no-repeat;
 	background-position:50% -40%;
 	position:absolute;
+}
+
+.defaultWeather .layer1::after {
+	content:"There is no weather";
+	height:100%;
+	width:100%;
+	top:20%;
+	left:0%;
+	position:absolute;
+	text-align:center;
+	font-size:20pt;
+	color:white;
+	
 }
 /************ PUT ANIMATIONS BELOW HERE ***************/
 
@@ -477,9 +496,11 @@ function onLoad(e) {
 			currentDay="Sunday";
 			break;
 		}	
-	var actualDate = channel.item.forecast[0].date;//finds the more numeric date, plus year
+	var actualDate = channel.item.forecast[0].date; //finds the more numeric date, plus year
 	var date = document.getElementById("date");
 	date.innerHTML = currentDay + ', ' + actualDate;
+	
+	console.log(forecast); //makes it easier to find different weather names because I don't know them all
 	
 	//loop through the 5 day forecast, 
 	//nothing updates here, but it should work if it did
@@ -497,18 +518,22 @@ function onLoad(e) {
 		//var img = document.getElementsByClassName("img");
 		var currentWeather = forecast[i].text;
 		var layer = document.getElementsByClassName("animation");
-		if (currentWeather == "Partly Cloudy" || currentWeather == "Cloudy") {
-			layer[i].className = "animation cloudy";
-		} else if (currentWeather == "Partly Sunny" || currentWeather == "Sunny") {
+		if (currentWeather == "Partly Cloudy" || currentWeather == "Mostly Sunny") { //set class for partly cloudy/sunny
+			layer[i].className = "animation partly";
+		}else if (currentWeather == "Cloudy" || currentWeather =="Mostly Cloudy") { //set class for cloudy/mostly cloudy
+			layer[i].className = "animation cloudy"
+		} else if (currentWeather == "Sunny") { //set class for sunny
 			layer[i].className = "animation sunny";
-		}else if (currentWeather =="Mostly Cloudy") {
-			layer[i].className = "animation cloudy";
-		}else if (currentWeather == "Rain") {
+		}else if (currentWeather == "Rain") { //set class for normal rain
 			layer[i].className = "animation rainy";
-		}else if (currentWeather == "Mostly Sunny") {
-			layer[i].className = "animation sunny";
-		}else if (currentWeather == "Scattered Showers" || currentWeather == "Showers") {
+		}else if (currentWeather == "Scattered Showers" || currentWeather == "Showers") { //set class for light rain
 			layer[i].className = "animation lightRain";
+		}else if (currentWeather == "Scattered Thunderstorms" || currentWeather == "Thunderstorms") { //I'm not sure if that's how they refer to regular thunderstorms
+			//add animation layer class here
+		}else if (currentWeather == "Breezy") {
+			//add animation layer class here
+		}else {
+			layer[i].className = "animation defaultWeather";
 		}
 		
 		//get the high temperatures for each day, put them in
