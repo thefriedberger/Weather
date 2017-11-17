@@ -327,12 +327,12 @@ body {background-color:gray;}
 }
 .lightning {
 	position:absolute;
-	left:0;
-	top:-5%;
+	left:10%;
+	top:-10%;
 	height:100%;
 	width:100%;
 	transform:scale(.8);
-	animation:flash 3s linear infinite;
+	animation:flash 3.5s linear infinite;
 }
 /************ PUT ANIMATIONS BELOW HERE ***************/
 
@@ -361,9 +361,10 @@ body {background-color:gray;}
 	to { stroke-dasharray:50 550; stroke-dashoffset:100;}
 }
 @keyframes flash {
-	0%,70% {fill:yellow; opacity:0; stroke:rgba(233,155,255,0);}
-	80%,90% {fill:yellow; opacity:1; }
-	100% {fill:yellow; opacity:.5;}
+	0%,70% {fill:yellow; opacity:0;}
+	71%,80% {fill:yellow; opacity:1; }
+	90% {fill:yellow; opacity:.5;}
+	100% { opacity:0;}
 }
 </style>
 </head>
@@ -551,7 +552,7 @@ function onLoad(e) {
 		var layer = document.getElementsByClassName("animation");
 		if (currentWeather == "Partly Cloudy" || currentWeather == "Mostly Sunny" ) { //set class for partly cloudy/sunny
 			layer[i].classList.add("partly");
-			layer[i].appendChild(makeWind());
+			layer[i].appendChild(makeWind()); //add some wind
 		}else if (currentWeather == "Cloudy" || currentWeather =="Mostly Cloudy") { //set class for cloudy/mostly cloudy
 			layer[i].classList.add("cloudy");
 		} else if (currentWeather == "Sunny") { //set class for sunny
@@ -562,11 +563,11 @@ function onLoad(e) {
 			layer[i].classList.add('lightRain');
 		}else if (currentWeather == "Scattered Thunderstorms" || currentWeather == "Thunderstorms") { //I'm not sure if that's how they refer to regular thunderstorms
 			layer[i].classList.add('rainy');
-			layer[i].insertBefore(makeLightning(), layer[i].childNodes[0]);
-		}else if (currentWeather == "Breezy" ) {
+			layer[i].insertBefore(makeLightning(), layer[i].childNodes[0]); //add lightning as the first child of the layer[i]
+		}else if (currentWeather == "Breezy" ) { //set class for breezy
 			layer[i].classList.add("breezy");
-			layer[i].appendChild(makeWind());
-		}else {
+			layer[i].appendChild(makeWind()); //add some wind
+		}else { //default screen response if I don't know have an animation for the weather
 			layer[i].classList.add('defaultWeather');
 		}
 		
@@ -591,19 +592,20 @@ function makeWind() {
 	svg.appendChild(path);
 	return svg;
 }
+//create lightning bolt
 function makeLightning(){
 	var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
-	var poly1 = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
-	var poly2 = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
-	var poly3 = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
+	var poly = [ document.createElementNS("http://www.w3.org/2000/svg",'polygon'),
+				 document.createElementNS("http://www.w3.org/2000/svg",'polygon'), 
+				 document.createElementNS("http://www.w3.org/2000/svg",'polygon') ];
 	svg.classList.add("lightning");
 	svg.setAttribute('viewBox', '0 0 100 100');
-	poly1.setAttribute('points',"70,10 40,60 30,60");
-	poly2.setAttribute('points',"45,60 35,60 15,100 20,100");
-	poly3.setAttribute('points',"28,100 17,100 0,140");
-	svg.appendChild(poly1);
-	svg.appendChild(poly2);
-	svg.appendChild(poly3);
+	poly[0].setAttribute('points',"60,10 80, 10 40,60 30,60");
+	poly[1].setAttribute('points',"45,60 35,60 15,100 20,100");
+	poly[2].setAttribute('points',"28,100 17,100 0,140");
+	for (var i = 0; i < poly.length; i++) {
+		svg.appendChild(poly[i]);
+	}
 	return svg;
 }
 //eventListener to flip the card
