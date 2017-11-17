@@ -315,21 +315,23 @@ body {background-color:gray;}
 }
 
 /******* Call me the breeze ********/
-svg, .breeze {
-	visibility:hidden;
+.breeze {
+	top:30%;
+	left:0;
+	animation:breeze 3.5s linear infinite;
 	position:absolute;
 	stroke:#d0d6dd;
 	stroke-width:3px;
 	stroke-linecap:round;
-	height:100%;
-	width:100%;
 	fill:rgba(0,0,0,0);
 }
-.breezy .breeze, .breezy svg, .partly .breeze, .partly svg, .sunny .breeze, .sunny svg {
-	top:10%;
+.lightning {
+	fill:yellow;
+	stroke:yellow;
+	position:absolute;
 	left:0;
-	animation:breeze 3.5s linear infinite;
-	visibility:visible;
+	height:100%;
+	width:100%;
 }
 /************ PUT ANIMATIONS BELOW HERE ***************/
 
@@ -543,8 +545,7 @@ function onLoad(e) {
 		var layer = document.getElementsByClassName("animation");
 		if (currentWeather == "Partly Cloudy" || currentWeather == "Mostly Sunny" ) { //set class for partly cloudy/sunny
 			layer[i].className = "animation partly";
-			var svg = makeWind();
-			layer[i].appendChild(svg);
+			layer[i].appendChild(makeWind());
 		}else if (currentWeather == "Cloudy" || currentWeather =="Mostly Cloudy") { //set class for cloudy/mostly cloudy
 			layer[i].className = "animation cloudy"
 		} else if (currentWeather == "Sunny") { //set class for sunny
@@ -557,8 +558,7 @@ function onLoad(e) {
 			//add animation layer class here
 		}else if (currentWeather == "Breezy" ) {
 			layer[i].className = "animation breezy";
-			var svg = makeWind();
-			layer[i].appendChild(svg);
+			layer[i].appendChild(makeWind());
 		}else {
 			layer[i].className = "animation defaultWeather";
 		}
@@ -578,10 +578,25 @@ function onLoad(e) {
 function makeWind() {
 	var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
 	var path = document.createElementNS("http://www.w3.org/2000/svg",'path');
-	svg.className = 'breeze';
+	svg.classList.add('breeze');
 	svg.setAttribute('viewBox','0 0 100 100');
 	path.setAttribute('d','M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28');
 	svg.appendChild(path);
+	return svg;
+}
+function makeLightning(){
+	var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
+	var poly1 = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
+	var poly2 = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
+	var poly3 = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
+	svg.classList.add("lightning");
+	svg.setAttribute('viewBox', '0 0 100 100');
+	poly1.setAttribute('points',"200,0 270,10 210,110");
+	poly2.setAttribute('points',"170,80 220,90 190,210");
+	poly3.setAttribute('points',"160,170 197,180 165,300");
+	svg.appendChild(poly1);
+	svg.appendChild(poly2);
+	svg.appendChild(poly3);
 	return svg;
 }
 //eventListener to flip the card
