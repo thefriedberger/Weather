@@ -315,21 +315,20 @@ body {background-color:gray;}
 }
 
 /******* Call me the breeze ********/
-.breeze {
+svg, .breeze {
 	visibility:hidden;
 	position:absolute;
-	stroke:white;
+	stroke:#d0d6dd;
 	stroke-width:3px;
 	stroke-linecap:round;
 	height:100%;
 	width:100%;
+	fill:rgba(0,0,0,0);
 }
-.breezy .breeze, .partly .breeze, .sunny .breeze {
+.breezy .breeze, .breezy svg, .partly .breeze, .partly svg, .sunny .breeze, .sunny svg {
 	top:10%;
 	left:0;
-	position:absolute;
 	animation:breeze 3.5s linear infinite;
-	fill:rgba(0,0,0,0);
 	visibility:visible;
 }
 /************ PUT ANIMATIONS BELOW HERE ***************/
@@ -384,9 +383,6 @@ body {background-color:gray;}
 					<div class="layer7"></div>
 					<div class="layer8"></div>
 					<div class="layer9"></div>
-					<svg class="breeze" viewbox="0 0 100 100">
-						<path d="M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28" ></path>
-					</svg>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -403,9 +399,6 @@ body {background-color:gray;}
 					<div class="layer7"></div>
 					<div class="layer8"></div>
 					<div class="layer9"></div>
-					<svg class="breeze" viewbox="0 0 100 100">
-						<path d="M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28" ></path>
-					</svg>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -422,9 +415,6 @@ body {background-color:gray;}
 					<div class="layer7"></div>
 					<div class="layer8"></div>
 					<div class="layer9"></div>
-					<svg class="breeze" viewbox="0 0 100 100">
-						<path d="M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28" ></path>
-					</svg>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -441,9 +431,6 @@ body {background-color:gray;}
 					<div class="layer7"></div>
 					<div class="layer8"></div>
 					<div class="layer9"></div>
-					<svg class="breeze" viewbox="0 0 100 100">
-						<path d="M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28" ></path>
-					</svg>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -460,9 +447,6 @@ body {background-color:gray;}
 					<div class="layer7"></div>
 					<div class="layer8"></div>
 					<div class="layer9"></div>
-					<svg class="breeze" viewbox="0 0 100 100">
-						<path d="M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28" ></path>
-					</svg>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -557,8 +541,10 @@ function onLoad(e) {
 		//var img = document.getElementsByClassName("img");
 		var currentWeather = forecast[i].text;
 		var layer = document.getElementsByClassName("animation");
-		if (currentWeather == "Partly Cloudy"  || currentWeather == "Mostly Sunny") { //set class for partly cloudy/sunny
+		if (currentWeather == "Partly Cloudy" || currentWeather == "Mostly Sunny" ) { //set class for partly cloudy/sunny
 			layer[i].className = "animation partly";
+			var svg = makeWind();
+			layer[i].appendChild(svg);
 		}else if (currentWeather == "Cloudy" || currentWeather =="Mostly Cloudy") { //set class for cloudy/mostly cloudy
 			layer[i].className = "animation cloudy"
 		} else if (currentWeather == "Sunny") { //set class for sunny
@@ -569,8 +555,10 @@ function onLoad(e) {
 			layer[i].className = "animation lightRain";
 		}else if (currentWeather == "Scattered Thunderstorms" || currentWeather == "Thunderstorms") { //I'm not sure if that's how they refer to regular thunderstorms
 			//add animation layer class here
-		}else if (currentWeather == "Breezy") {
+		}else if (currentWeather == "Breezy" ) {
 			layer[i].className = "animation breezy";
+			var svg = makeWind();
+			layer[i].appendChild(svg);
 		}else {
 			layer[i].className = "animation defaultWeather";
 		}
@@ -585,6 +573,16 @@ function onLoad(e) {
 		var low = document.getElementsByClassName("low");
 		low[i].innerHTML += lowTemp + '&#176';
 	}
+}
+//function to create the svg for wind animation
+function makeWind() {
+	var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
+	var path = document.createElementNS("http://www.w3.org/2000/svg",'path');
+	svg.className = 'breeze';
+	svg.setAttribute('viewBox','0 0 100 100');
+	path.setAttribute('d','M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28');
+	svg.appendChild(path);
+	return svg;
 }
 //eventListener to flip the card
 var card = document.getElementById("card");
