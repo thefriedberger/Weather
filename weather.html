@@ -219,7 +219,7 @@ body {background-color:gray;}
 
 /******* Sets animation layers for rain ********/
 
-.rainy .layer2, .lightRain .layer2 {
+.rainy .layer10, .lightRain .layer10 {
 	height:100%;
 	width:100%;
 	left:30%;
@@ -300,6 +300,8 @@ body {background-color:gray;}
 	position:absolute;
 }
 
+/******* Fallback if weather isn't covered *******/
+
 .defaultWeather .layer1::after {
 	content:"There is no weather";
 	height:100%;
@@ -310,7 +312,25 @@ body {background-color:gray;}
 	text-align:center;
 	font-size:20pt;
 	color:white;
-	
+}
+
+/******* Call me the breeze ********/
+.breeze {
+	visibility:hidden;
+	position:absolute;
+	stroke:white;
+	stroke-width:3px;
+	stroke-linecap:round;
+	height:100%;
+	width:100%;
+}
+.breezy .breeze, .partly .breeze, .sunny .breeze {
+	top:10%;
+	left:0;
+	position:absolute;
+	animation:breeze 3.5s linear infinite;
+	fill:rgba(0,0,0,0);
+	visibility:visible;
 }
 /************ PUT ANIMATIONS BELOW HERE ***************/
 
@@ -333,6 +353,10 @@ body {background-color:gray;}
 @keyframes cloudMove {
 	0% {left:-70%; }
 	100% { left:105%; }
+}
+@keyframes breeze {
+	from { stroke-dasharray:50 550; stroke-dashoffset:650; }
+	to { stroke-dasharray:50 550; stroke-dashoffset:100;}
 }
 </style>
 </head>
@@ -360,6 +384,9 @@ body {background-color:gray;}
 					<div class="layer7"></div>
 					<div class="layer8"></div>
 					<div class="layer9"></div>
+					<svg class="breeze" viewbox="0 0 100 100">
+						<path d="M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28" ></path>
+					</svg>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -376,6 +403,9 @@ body {background-color:gray;}
 					<div class="layer7"></div>
 					<div class="layer8"></div>
 					<div class="layer9"></div>
+					<svg class="breeze" viewbox="0 0 100 100">
+						<path d="M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28" ></path>
+					</svg>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -392,6 +422,9 @@ body {background-color:gray;}
 					<div class="layer7"></div>
 					<div class="layer8"></div>
 					<div class="layer9"></div>
+					<svg class="breeze" viewbox="0 0 100 100">
+						<path d="M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28" ></path>
+					</svg>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -408,6 +441,9 @@ body {background-color:gray;}
 					<div class="layer7"></div>
 					<div class="layer8"></div>
 					<div class="layer9"></div>
+					<svg class="breeze" viewbox="0 0 100 100">
+						<path d="M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28" ></path>
+					</svg>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -416,7 +452,7 @@ body {background-color:gray;}
 			<div class="slot" id="day5">
 				<div class="animation">
 					<div class="layer1"></div>
-					<div class="layer2"></div>
+					<svg class="layer2"></svg>
 					<div class="layer3"></div>
 					<div class="layer4"></div>
 					<div class="layer5"></div>
@@ -424,6 +460,9 @@ body {background-color:gray;}
 					<div class="layer7"></div>
 					<div class="layer8"></div>
 					<div class="layer9"></div>
+					<svg class="breeze" viewbox="0 0 100 100">
+						<path d="M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28" ></path>
+					</svg>
 				</div>
 				<div class="day"></div>
 				<div class="high"></div>
@@ -518,7 +557,7 @@ function onLoad(e) {
 		//var img = document.getElementsByClassName("img");
 		var currentWeather = forecast[i].text;
 		var layer = document.getElementsByClassName("animation");
-		if (currentWeather == "Partly Cloudy" || currentWeather == "Mostly Sunny") { //set class for partly cloudy/sunny
+		if (currentWeather == "Partly Cloudy"  || currentWeather == "Mostly Sunny") { //set class for partly cloudy/sunny
 			layer[i].className = "animation partly";
 		}else if (currentWeather == "Cloudy" || currentWeather =="Mostly Cloudy") { //set class for cloudy/mostly cloudy
 			layer[i].className = "animation cloudy"
@@ -531,7 +570,7 @@ function onLoad(e) {
 		}else if (currentWeather == "Scattered Thunderstorms" || currentWeather == "Thunderstorms") { //I'm not sure if that's how they refer to regular thunderstorms
 			//add animation layer class here
 		}else if (currentWeather == "Breezy") {
-			//add animation layer class here
+			layer[i].className = "animation breezy";
 		}else {
 			layer[i].className = "animation defaultWeather";
 		}
