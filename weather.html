@@ -326,12 +326,13 @@ body {background-color:gray;}
 	fill:rgba(0,0,0,0);
 }
 .lightning {
-	fill:yellow;
-	stroke:yellow;
 	position:absolute;
 	left:0;
+	top:-5%;
 	height:100%;
 	width:100%;
+	transform:scale(.8);
+	animation:flash 3s linear infinite;
 }
 /************ PUT ANIMATIONS BELOW HERE ***************/
 
@@ -358,6 +359,11 @@ body {background-color:gray;}
 @keyframes breeze {
 	from { stroke-dasharray:50 550; stroke-dashoffset:650; }
 	to { stroke-dasharray:50 550; stroke-dashoffset:100;}
+}
+@keyframes flash {
+	0%,70% {fill:yellow; opacity:0; stroke:rgba(233,155,255,0);}
+	80%,90% {fill:yellow; opacity:1; }
+	100% {fill:yellow; opacity:.5;}
 }
 </style>
 </head>
@@ -544,23 +550,24 @@ function onLoad(e) {
 		var currentWeather = forecast[i].text;
 		var layer = document.getElementsByClassName("animation");
 		if (currentWeather == "Partly Cloudy" || currentWeather == "Mostly Sunny" ) { //set class for partly cloudy/sunny
-			layer[i].className = "animation partly";
+			layer[i].classList.add("partly");
 			layer[i].appendChild(makeWind());
 		}else if (currentWeather == "Cloudy" || currentWeather =="Mostly Cloudy") { //set class for cloudy/mostly cloudy
-			layer[i].className = "animation cloudy"
+			layer[i].classList.add("cloudy");
 		} else if (currentWeather == "Sunny") { //set class for sunny
-			layer[i].className = "animation sunny";
+			layer[i].classList.add("sunny");
 		}else if (currentWeather == "Rain") { //set class for normal rain
-			layer[i].className = "animation rainy";
+			layer[i].classList.add("rainy");
 		}else if (currentWeather == "Scattered Showers" || currentWeather == "Showers") { //set class for light rain
-			layer[i].className = "animation lightRain";
+			layer[i].classList.add('lightRain');
 		}else if (currentWeather == "Scattered Thunderstorms" || currentWeather == "Thunderstorms") { //I'm not sure if that's how they refer to regular thunderstorms
-			//add animation layer class here
+			layer[i].classList.add('rainy');
+			layer[i].insertBefore(makeLightning(), layer[i].childNodes[0]);
 		}else if (currentWeather == "Breezy" ) {
-			layer[i].className = "animation breezy";
+			layer[i].classList.add("breezy");
 			layer[i].appendChild(makeWind());
 		}else {
-			layer[i].className = "animation defaultWeather";
+			layer[i].classList.add('defaultWeather');
 		}
 		
 		//get the high temperatures for each day, put them in
@@ -591,9 +598,9 @@ function makeLightning(){
 	var poly3 = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
 	svg.classList.add("lightning");
 	svg.setAttribute('viewBox', '0 0 100 100');
-	poly1.setAttribute('points',"200,0 270,10 210,110");
-	poly2.setAttribute('points',"170,80 220,90 190,210");
-	poly3.setAttribute('points',"160,170 197,180 165,300");
+	poly1.setAttribute('points',"70,10 40,60 30,60");
+	poly2.setAttribute('points',"45,60 35,60 15,100 20,100");
+	poly3.setAttribute('points',"28,100 17,100 0,140");
 	svg.appendChild(poly1);
 	svg.appendChild(poly2);
 	svg.appendChild(poly3);
