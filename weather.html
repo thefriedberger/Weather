@@ -316,14 +316,33 @@ body {background-color:gray;}
 
 /******* Call me the breeze ********/
 .breeze {
-	top:30%;
-	left:0;
-	animation:breeze 3.5s linear infinite;
 	position:absolute;
-	stroke:#d0d6dd;
+	stroke:rgba(0,0,0,0);
 	stroke-width:3px;
 	stroke-linecap:round;
 	fill:rgba(0,0,0,0);
+}
+.breeze1 {
+	top:30%;
+	left:0;
+	animation:breeze 3.5s linear infinite;
+	stroke:#d0d6dd;
+}
+.breeze2 {
+	top:20%;
+	left:0;
+	animation:breeze 3.5s linear infinite;
+	stroke:#d0d6dd;
+	animation-delay:1s;
+	transform:scaleY(.8);
+}
+.breeze3 {
+	top:40%;
+	left:0;
+	animation:breeze 3.5s linear infinite;
+	stroke:#d0d6dd;
+	animation-delay:.5s;
+	transform:scaleY(.7);
 }
 .lightning {
 	position:absolute;
@@ -331,7 +350,20 @@ body {background-color:gray;}
 	top:-10%;
 	height:100%;
 	width:100%;
-	transform:scale(.8);
+}
+.lightning1 {
+	transform:scale(.7);
+	left:-20%;
+	top:-10%;
+	animation:flash 3.5s linear infinite;
+}
+.lightning2 {
+	transform:scale(.5);
+	left:35%;
+	top:-20%;
+	animation:flash 3.5s linear infinite;
+}
+.lightning3 {
 	animation:flash 3.5s linear infinite;
 }
 /************ PUT ANIMATIONS BELOW HERE ***************/
@@ -552,21 +584,32 @@ function onLoad(e) {
 		var layer = document.getElementsByClassName("animation");
 		if (currentWeather == "Partly Cloudy" || currentWeather == "Mostly Sunny" ) { //set class for partly cloudy/sunny
 			layer[i].classList.add("partly");
-			layer[i].appendChild(makeWind()); //add some wind
+			layer[i].appendChild(makeWind('breeze1')); //add some wind
 		}else if (currentWeather == "Cloudy" || currentWeather =="Mostly Cloudy") { //set class for cloudy/mostly cloudy
 			layer[i].classList.add("cloudy");
+			layer[i].appendChild(makeWind('breeze1')); //add some wind
 		} else if (currentWeather == "Sunny") { //set class for sunny
 			layer[i].classList.add("sunny");
+			layer[i].appendChild(makeWind('breeze1')); //add some wind
 		}else if (currentWeather == "Rain") { //set class for normal rain
 			layer[i].classList.add("rainy");
 		}else if (currentWeather == "Scattered Showers" || currentWeather == "Showers") { //set class for light rain
 			layer[i].classList.add('lightRain');
-		}else if (currentWeather == "Scattered Thunderstorms" || currentWeather == "Thunderstorms") { //I'm not sure if that's how they refer to regular thunderstorms
+
+		}else if (currentWeather == "Scattered Thunderstorms") { //Scattered thunderstorms, only two bolts
 			layer[i].classList.add('rainy');
-			layer[i].insertBefore(makeLightning(), layer[i].childNodes[0]); //add lightning as the first child of the layer[i]
+			layer[i].insertBefore(makeLightning('lightning1'), layer[i].childNodes[0]); //add lightning as the first child of the layer[i]
+			layer[i].insertBefore(makeLightning('lightning2'), layer[i].childNodes[0]); //add lightning as the first child of the layer[i]
+		}else if (currentWeather == "Thunderstorms") { //I hope that's how they refer to normal thunderstorms
+			layer[i].classList.add('rainy');
+			layer[i].insertBefore(makeLightning('lightning1'), layer[i].childNodes[0]); //add lightning as the first child of the layer[i]
+			layer[i].insertBefore(makeLightning('lightning2'), layer[i].childNodes[0]); //add lightning as the first child of the layer[i]
+			layer[i].insertBefore(makeLightning('lightning3'), layer[i].childNodes[0]); //add lightning as the first child of the layer[i]
 		}else if (currentWeather == "Breezy" ) { //set class for breezy
 			layer[i].classList.add("breezy");
-			layer[i].appendChild(makeWind()); //add some wind
+			layer[i].appendChild(makeWind('breeze1')); //add some wind
+			layer[i].appendChild(makeWind('breeze2'));
+			layer[i].appendChild(makeWind('breeze3'));
 		}else { //default screen response if I don't know have an animation for the weather
 			layer[i].classList.add('defaultWeather');
 		}
@@ -583,22 +626,24 @@ function onLoad(e) {
 	}
 }
 //function to create the svg for wind animation
-function makeWind() {
+function makeWind(classNum) {
 	var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
 	var path = document.createElementNS("http://www.w3.org/2000/svg",'path');
 	svg.classList.add('breeze');
+	svg.classList.add(classNum);
 	svg.setAttribute('viewBox','0 0 100 100');
 	path.setAttribute('d','M0,50 C0,50 20,20 40,15 C60,10 76,15 80,30 C80,40 60,45 55,35 C55,25 65,23 75,20 C85,20 95,25 100,28');
 	svg.appendChild(path);
 	return svg;
 }
 //create lightning bolt
-function makeLightning(){
+function makeLightning(classNum){
 	var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
 	var poly = [ document.createElementNS("http://www.w3.org/2000/svg",'polygon'),
 				 document.createElementNS("http://www.w3.org/2000/svg",'polygon'), 
 				 document.createElementNS("http://www.w3.org/2000/svg",'polygon') ];
 	svg.classList.add("lightning");
+	svg.classList.add(classNum);
 	svg.setAttribute('viewBox', '0 0 100 100');
 	poly[0].setAttribute('points',"60,10 80, 10 40,60 30,60");
 	poly[1].setAttribute('points',"45,60 35,60 15,100 20,100");
